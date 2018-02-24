@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Matching Game</title>
     <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
     <link rel="stylesheet" href="css/app.css">
@@ -22,11 +23,16 @@
         		<li><i class="fa fa-star"></i></li>
         	</ul>
 
-        	<span class="moves">0</span> Moves
+          <span>
+            <span class="moves">0</span> Moves
+          </span>
 
-          <div class="restart">
+          <span class="restart">
         		<i class="fa fa-repeat"></i>
-        	</div>
+        	</span>
+
+          <span class="timer"></span>
+
         </section>
 
         <ul class="deck">
@@ -34,6 +40,16 @@
         <div class="game-end">
           <i class="fa fa-check"></i>
           <div class="message"></div>
+          <ul class="final-stars">
+        		<li><i class="fa fa-star"></i></li>
+        		<li><i class="fa fa-star"></i></li>
+        		<li><i class="fa fa-star"></i></li>
+        	</ul>
+          <div>
+            Your final time was:
+            <span class="final-time"></span>
+          </div>
+          <br>
           <button type="button" name="playAgainBtn" id="playAgainBtn">Play Again!</button>
         </div>
     </div>

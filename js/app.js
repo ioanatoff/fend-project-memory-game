@@ -13,8 +13,13 @@ const deck = document.querySelector('.deck');
 let cards = [];
 let viewCards = [];
 let counter = 0;
+let time = 0;
+let gameStarted = false;
+
 
 function setupGame() {
+    gameStarted = true;
+    startTime();
     for (let i = 0; i < 8; i++) {
         cards.push({
             label: ICON_MAP[i]
@@ -48,8 +53,10 @@ setupGame();
 function cleanUpGame() {
     cards = [];
     viewCards = [];
-
     counter = 0;
+    time = 0;
+    updateStars('.stars');
+    updateTime('.timer');
     document.querySelector('.moves').textContent = counter;
 
     while (deck.firstChild) {
@@ -80,7 +87,7 @@ function checkCards(card) {
             openedCards = [];
         }
         incrementCounter();
-        updateStars();
+        updateStars('.stars');
         checkGameEnd();
     } else if (openedCards.length === 2) {
         if (openedCards[0].firstChild.className !== openedCards[1].firstChild.className) {
@@ -108,8 +115,8 @@ function incrementCounter() {
     document.querySelector('.moves').textContent = counter;
 }
 
-function updateStars() {
-    let stars = document.querySelector('.stars');
+function updateStars(className) {
+    let stars = document.querySelector(className);
     let starArr = Array.from(stars.children);
     starArr.forEach((star, index) => {
         if(counter > 10 && index === 2) {
@@ -128,9 +135,12 @@ function checkGameEnd() {
     });
 
     if(!found) {
+        gameStarted = false;
         document.querySelector('.game-end').className = 'game-end show';
         let message = document.querySelector('.message');
         message.textContent = `Congratulations! You Won! You've managed to do it in ${counter} moves.`;
+        updateStars('.final-stars');
+        updateTime('.final-time');
     }
 }
 
@@ -155,4 +165,30 @@ function shuffle(array) {
     }
 
     return array;
+}
+
+function startTime() {
+    updateTime('.timer');
+    if (gameStarted) {
+        setTimeout(startTime, 1000);
+    }
+}
+
+function updateTime(className) {
+    let minutes = Math.floor(time/60);
+    let seconds = time%60;
+    time++;
+    minutes = formatTime(minutes);
+    seconds = formatTime(seconds);
+    document.querySelector(className).textContent = minutes + ':' + seconds;
+}
+
+function formatTime(value) {
+    if (value === 0) {
+        return '00';
+    } else if (value < 9) {
+        return '0' + value;
+    } else {
+        return value;
+    }
 }
